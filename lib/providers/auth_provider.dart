@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math' hide log;
 
 import 'package:final_project/data/auth_helper.dart';
 import 'package:final_project/data/firestore_helper.dart';
@@ -46,7 +47,8 @@ class AppAuthProvider extends ChangeNotifier {
   String? selectedSpeciality;
   String? selectedHospital;
 
-  File? selectedImage;
+  File? selectedPatientImage;
+  File? selectedDoctorImage;
   bool isLoading = false;
 
   nullValidation(String? value, AppLocalizations localization) {
@@ -209,7 +211,7 @@ class AppAuthProvider extends ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-      if (selectedImage == null) {
+      if (selectedPatientImage == null) {
         CustomShowDialog.showDialogFunction(
           localization.pictureValidation,
           localization,
@@ -227,7 +229,7 @@ class AppAuthProvider extends ChangeNotifier {
 
         if (credentials != null) {
           String? imageUrl = await StorageHelper.storageHelper.uploadImage(
-            selectedImage!,
+            selectedPatientImage!,
           );
           PatientModel patient = PatientModel(
             id: credentials.user!.uid,
@@ -246,7 +248,7 @@ class AppAuthProvider extends ChangeNotifier {
           ageController.clear();
 
           passwordController.clear();
-          selectedImage = null;
+          selectedPatientImage = null;
 
           return credentials;
         }
@@ -263,21 +265,37 @@ class AppAuthProvider extends ChangeNotifier {
 
   Future<UserCredential?> doctorSignUp(AppLocalizations localization) async {
     try {
-      if (signUpKey.currentState!.validate()) {
-        isLoading = true;
+      isLoading = true;
+      notifyListeners();
+      if (selectedDoctorImage == null) {
+        CustomShowDialog.showDialogFunction(
+          localization.pictureValidation,
+          localization,
+        );
+        isLoading = false;
         notifyListeners();
+        return null;
+      }
+      if (signUpKey.currentState!.validate()) {
         UserCredential? credentials = await AuthHelper.authHelper.signUp(
           doctorEmailController.text,
           doctorPasswordController.text,
           localization,
         );
         if (credentials != null) {
+          String? doctorImageUrl = await StorageHelper.storageHelper
+              .uploadImage(selectedDoctorImage!);
+          Random random = Random();
           DoctorModel doctor = DoctorModel(
             id: credentials.user!.uid,
             email: doctorEmailController.text,
             name: doctorUserNameController.text,
             speciality: selectedSpeciality!,
             hospitalName: selectedHospital!,
+            imgUrl: doctorImageUrl ?? "",
+            patientNumbers: (20 + random.nextInt(31)).toString(),
+            experience: (3 + random.nextInt(8)).toString(),
+            rating: ((random.nextInt(6) + 45) / 10).toString(),
           );
           await FireStoreHelper.fireStoreHelper.addDoctorToFireStore(doctor);
           CustomShowDialog.showDialogFunction(
@@ -289,6 +307,7 @@ class AppAuthProvider extends ChangeNotifier {
           doctorUserNameController.clear();
           selectedSpeciality = null;
           selectedHospital = null;
+          selectedDoctorImage = null;
           doctorPasswordController.clear();
 
           doctorImgUrlController.clear();
@@ -326,8 +345,13 @@ class AppAuthProvider extends ChangeNotifier {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      selectedImage = File(pickedFile.path);
-      notifyListeners();
+      if (userType == "patient") {
+        selectedPatientImage = File(pickedFile.path);
+        notifyListeners();
+      } else {
+        selectedDoctorImage = File(pickedFile.path);
+        notifyListeners();
+      }
     }
   }
 }

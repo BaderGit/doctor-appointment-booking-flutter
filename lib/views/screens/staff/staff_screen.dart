@@ -12,10 +12,10 @@ class StaffScreen extends StatefulWidget {
   const StaffScreen({super.key});
 
   @override
-  _StaffScreenState createState() => _StaffScreenState();
+  StaffScreenState createState() => StaffScreenState();
 }
 
-class _StaffScreenState extends State<StaffScreen> {
+class StaffScreenState extends State<StaffScreen> {
   bool obsecurePass = true;
 
   @override
@@ -95,7 +95,41 @@ class _StaffScreenState extends State<StaffScreen> {
                       key: auth.signUpKey,
                       child: Column(
                         children: [
-                          const SizedBox(height: 20),
+                          Config.spaceSmall,
+                          Stack(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  auth.pickImage();
+                                },
+                                child: CircleAvatar(
+                                  radius: 64,
+                                  backgroundImage:
+                                      auth.selectedDoctorImage != null
+                                      ? FileImage(auth.selectedDoctorImage!)
+                                      : const AssetImage("assets/profile33.jpg")
+                                            as ImageProvider,
+                                ),
+                              ),
+                              Positioned(
+                                bottom: -10,
+                                right: 80,
+                                child: IconButton(
+                                  onPressed: () {
+                                    auth.pickImage();
+                                  },
+                                  icon: Icon(
+                                    size: 30,
+                                    Icons.add_a_photo,
+                                    color: Config.primaryColor,
+                                  ),
+                                  tooltip: localizations.uploadPhoto,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Config.spaceSmall,
+
                           TextFormField(
                             validator: (value) =>
                                 auth.nullValidation(value, localizations),
@@ -105,13 +139,12 @@ class _StaffScreenState extends State<StaffScreen> {
                             decoration: InputDecoration(
                               hintText: localizations.fullNameHint,
                               labelText: localizations.fullNameLabel,
-                              prefixIcon: const Icon(Icons.email_outlined),
+                              prefixIcon: const Icon(Icons.person_outline),
                               prefixIconColor: Config.primaryColor,
                             ),
                           ),
                           Config.spaceSmall,
                           DropdownButtonFormField<String>(
-                            // key: ValueKey(lang.currentLocale),
                             dropdownColor: Colors.white,
                             validator: (value) =>
                                 auth.nullValidation(value, localizations),
@@ -153,7 +186,7 @@ class _StaffScreenState extends State<StaffScreen> {
                               hintText: localizations.hospitalNamehint,
                               labelText: localizations.hospitalNameLabel,
                               prefixIcon: const Icon(
-                                Icons.medical_services_outlined,
+                                Icons.local_hospital_sharp,
                               ),
                               prefixIconColor: Config.primaryColor,
                             ),

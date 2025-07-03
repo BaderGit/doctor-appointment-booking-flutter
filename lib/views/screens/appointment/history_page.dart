@@ -94,8 +94,10 @@ class _HistoryPageState extends State<HistoryPage> {
                                       Row(
                                         children: [
                                           CircleAvatar(
-                                            backgroundImage: AssetImage(
-                                              "assets/doctor_9.jpg",
+                                            backgroundImage: NetworkImage(
+                                              filteredPatientStoredAppointments[index]!
+                                                  .doctor
+                                                  .imgUrl,
                                             ),
                                           ),
                                           const SizedBox(width: 10),

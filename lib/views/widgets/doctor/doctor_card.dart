@@ -29,7 +29,7 @@ class DoctorCard extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: Config.widthSize * 0.33,
-                    child: Image.asset("assets/doctor_8.jpg", fit: BoxFit.fill),
+                    child: Image.network(doctor!.imgUrl, fit: BoxFit.fill),
                   ),
                   Flexible(
                     child: Padding(

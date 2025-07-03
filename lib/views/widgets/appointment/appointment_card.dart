@@ -45,7 +45,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: AssetImage("assets/doctor_1.jpg"),
+                        backgroundImage: NetworkImage(widget.doctor.imgUrl),
                       ),
                       const SizedBox(width: 10),
                       Column(

@@ -9,6 +9,10 @@ class DoctorModel {
   final String email;
   final String speciality;
   final String hospitalName;
+  final String imgUrl;
+  final String patientNumbers;
+  final String experience;
+  final String rating;
 
   DoctorModel({
     this.id,
@@ -16,6 +20,10 @@ class DoctorModel {
     required this.email,
     required this.speciality,
     required this.hospitalName,
+    required this.imgUrl,
+    required this.patientNumbers,
+    required this.experience,
+    required this.rating,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,6 +33,10 @@ class DoctorModel {
       'email': email,
       'speciality': speciality,
       'hospitalName': hospitalName,
+      'imgUrl': imgUrl,
+      'patientNumbers': patientNumbers,
+      'experience': experience,
+      'rating': rating,
     };
   }
 
@@ -35,6 +47,10 @@ class DoctorModel {
       email: map['email'] as String,
       speciality: map['speciality'] as String,
       hospitalName: map['hospitalName'] as String,
+      imgUrl: map['imgUrl'] as String,
+      patientNumbers: map['patientNumbers'] as String,
+      experience: map['experience'] as String,
+      rating: map['rating'] as String,
     );
   }
 

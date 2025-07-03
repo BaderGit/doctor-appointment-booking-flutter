@@ -32,8 +32,8 @@ class _SignUpFormState extends State<SignUpForm> {
                     },
                     child: CircleAvatar(
                       radius: 64,
-                      backgroundImage: auth.selectedImage != null
-                          ? FileImage(auth.selectedImage!)
+                      backgroundImage: auth.selectedPatientImage != null
+                          ? FileImage(auth.selectedPatientImage!)
                           : const AssetImage("assets/profile33.jpg")
                                 as ImageProvider,
                     ),

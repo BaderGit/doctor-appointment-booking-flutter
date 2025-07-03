@@ -22,7 +22,13 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     navigateFun(context);
     return Scaffold(
-      body: Center(child: Image(image: AssetImage("assets/doctor.png"))),
+      body: Center(
+        child: Image(
+          height: 100,
+          width: 100,
+          image: AssetImage("assets/app_logo.png"),
+        ),
+      ),
     );
   }
 }

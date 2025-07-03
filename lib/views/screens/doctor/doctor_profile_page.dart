@@ -34,7 +34,9 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> {
                           SizedBox(height: 110),
                           CircleAvatar(
                             radius: 65.0,
-                            backgroundImage: AssetImage('assets/profile1.jpg'),
+                            backgroundImage: NetworkImage(
+                              fireStore.doctor!.imgUrl,
+                            ),
                             backgroundColor: Colors.white,
                           ),
                           SizedBox(height: 10),

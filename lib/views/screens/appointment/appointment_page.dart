@@ -89,8 +89,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                       Row(
                                         children: [
                                           CircleAvatar(
-                                            backgroundImage: AssetImage(
-                                              "assets/doctor_9.jpg",
+                                            backgroundImage: NetworkImage(
+                                              filteredPatientAppointments[index]!
+                                                  .doctor
+                                                  .imgUrl,
                                             ),
                                           ),
                                           const SizedBox(width: 10),

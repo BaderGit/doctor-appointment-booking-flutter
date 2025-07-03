@@ -107,14 +107,6 @@ class LanguageProvider extends ChangeNotifier {
     }
   }
 
-  // "monday": "Monday",
-  // "tuesday": "Tuesday",
-  // "wednesday": "Wednesday",
-  // "thursday": "Thursday",
-  // "friday": "Friday",
-  // "saturday": "Saturday",
-  // "sunday": "Sunday",
-
   String getDayLocalization(String day, AppLocalizations localization) {
     switch (day.toLowerCase()) {
       case 'monday':

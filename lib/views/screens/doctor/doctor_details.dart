@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:final_project/l10n/app_localizations.dart';
 import 'package:final_project/models/doctor.dart';
 import 'package:final_project/models/patient.dart';
@@ -74,7 +72,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
 }
 
 class AboutDoctor extends StatelessWidget {
-  const AboutDoctor({Key? key, required this.doctor}) : super(key: key);
+  const AboutDoctor({super.key, required this.doctor});
   final DoctorModel doctor;
 
   @override
@@ -91,7 +89,7 @@ class AboutDoctor extends StatelessWidget {
               Config.spaceMedium,
               CircleAvatar(
                 radius: 65.0,
-                backgroundImage: AssetImage("assets/doctor_1.jpg"),
+                backgroundImage: NetworkImage(doctor.imgUrl),
                 backgroundColor: Colors.white,
               ),
               Config.spaceMedium,
@@ -105,15 +103,6 @@ class AboutDoctor extends StatelessWidget {
               ),
               Config.spaceSmall,
 
-              // SizedBox(
-              //   width: Config.widthSize * 0.75,
-              //   child: Text(
-              //     localizations.doctorQualifications,
-              //     style: const TextStyle(color: Colors.grey, fontSize: 15),
-              //     softWrap: true,
-              //     textAlign: TextAlign.center,
-              //   ),
-              // ),
               SizedBox(
                 width: Config.widthSize * 0.75,
                 child: Text(
@@ -139,7 +128,7 @@ class AboutDoctor extends StatelessWidget {
 }
 
 class DetailBody extends StatelessWidget {
-  const DetailBody({Key? key, required this.doctor}) : super(key: key);
+  const DetailBody({super.key, required this.doctor});
   final DoctorModel doctor;
 
   @override
@@ -155,7 +144,7 @@ class DetailBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Config.spaceSmall,
-              DoctorInfo(patients: 15, exp: 4),
+              DoctorInfo(doctor: doctor),
               Config.spaceMedium,
               Center(
                 child: Text(
@@ -191,32 +180,27 @@ class DetailBody extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class DoctorInfo extends StatelessWidget {
-  DoctorInfo({super.key, required this.patients, required this.exp});
-
-  final random = Random();
-  int? patients;
-  int? exp;
-  double? rating;
+  const DoctorInfo({super.key, required this.doctor});
+  final DoctorModel doctor;
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    patients = 20 + random.nextInt(31);
-    exp = random.nextInt(10) + 1;
-    rating = (random.nextInt(6) + 45) / 10;
 
     return Row(
       children: <Widget>[
-        InfoCard(label: localizations.patientsLabel, value: '$patients'),
+        InfoCard(
+          label: localizations.patientsLabel,
+          value: doctor.patientNumbers,
+        ),
         const SizedBox(width: 15),
         InfoCard(
           label: localizations.experienceLabel,
-          value: localizations.yearsOfExperience(exp ?? ""),
+          value: localizations.yearsOfExperience(doctor.experience),
         ),
         const SizedBox(width: 15),
-        InfoCard(label: localizations.ratingLabel, value: rating.toString()),
+        InfoCard(label: localizations.ratingLabel, value: doctor.rating),
       ],
     );
   }

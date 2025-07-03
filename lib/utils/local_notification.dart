@@ -92,25 +92,6 @@ class LocalNotification {
       }
     }
 
-    // final testTzDateTime = tz.TZDateTime.from(
-    //   tz.TZDateTime.now(tz.local).add(Duration(days: 2)),
-    //   cairo,
-    // );
-    // log(testTzDateTime.toString());
-    // final reminder = testTzDateTime.subtract(Duration(days: 1));
-    // log(reminder.toString());
-
-    // log(reminder.subtract(Duration(days: 1)).toString());
-    // log(now.toString());
-
-    // if (reminder.subtract(Duration(days: 1)).day == now.day) {
-    //   if (reminder.isAfter(now)) {
-    //     log("inside if $reminder");
-    //     showSchduledNotification(reminder);
-    //     log(reminder.toString());
-    //     log(now.toString());
-    //   }
-    // }
     final testTzDateTime = tz.TZDateTime.from(
       now.add(Duration(seconds: 40)),
       cairo,
