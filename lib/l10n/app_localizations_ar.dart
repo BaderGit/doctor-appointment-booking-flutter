@@ -310,7 +310,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get time_1pm => '13:00 م';
 
   @override
-  String get time_2pm => '4:00 م';
+  String get time_2pm => '14:00 م';
 
   @override
   String get time_3pm => '15:00 م';

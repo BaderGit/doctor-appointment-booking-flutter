@@ -2,7 +2,7 @@ import 'package:final_project/providers/auth_provider.dart';
 import 'package:final_project/providers/firestore_provider.dart';
 import 'package:final_project/providers/language_provider.dart';
 import 'package:final_project/utils/config.dart';
-import 'package:final_project/views/widgets/button.dart';
+import 'package:final_project/views/widgets/general/button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -80,11 +80,6 @@ class StaffScreenState extends State<StaffScreen> {
                         IconButton(
                           onPressed: () {
                             auth.signOut();
-                            auth.doctorEmailController.clear();
-                            auth.doctorUserNameController.clear();
-                            auth.doctorPasswordController.clear();
-                            auth.selectedHospital = null;
-                            auth.selectedSpeciality = null;
                           },
                           icon: const Icon(Icons.logout),
                           tooltip: localizations.logout,

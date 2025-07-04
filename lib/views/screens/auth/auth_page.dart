@@ -57,6 +57,12 @@ class _AuthPageState extends State<AuthPage> {
                             IconButton(
                               onPressed: () {
                                 AppRouter.popRoute();
+                                auth.emailController.clear();
+                                auth.ageController.clear();
+                                auth.userNameController.clear();
+                                auth.passwordController.clear();
+                                auth.selectedGender = "male";
+                                auth.selectedPatientImage = null;
                               },
                               icon: Icon(Icons.arrow_forward),
                               tooltip: localizations.backButtonTooltip,

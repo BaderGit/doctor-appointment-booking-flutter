@@ -3,7 +3,7 @@ import 'package:final_project/providers/auth_provider.dart';
 import 'package:final_project/providers/language_provider.dart';
 import 'package:final_project/utils/app_router.dart';
 import 'package:final_project/utils/config.dart';
-import 'package:final_project/views/widgets/button.dart';
+import 'package:final_project/views/widgets/general/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

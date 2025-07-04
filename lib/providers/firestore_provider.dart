@@ -56,8 +56,17 @@ class FireStoreProvider extends ChangeNotifier {
   getAllAppointments() async {
     allAppointments = await FireStoreHelper.fireStoreHelper
         .getAllAppointments();
-    allAppointments.sort((app1, app2) => app1!.time.compareTo(app2!.time));
-    allAppointments.sort((app1, app2) => app1!.date.compareTo(app2!.date));
+    allAppointments.sort((app1, app2) {
+      final app1Date = DateFormat(
+        'M/dd/yyyy HH:mm',
+      ).parse("${app1!.date} ${app1.time}");
+
+      final app2Date = DateFormat(
+        'M/dd/yyyy HH:mm',
+      ).parse("${app2!.date} ${app2.time}");
+
+      return app1Date.compareTo(app2Date);
+    });
 
     notifyListeners();
   }
@@ -67,7 +76,11 @@ class FireStoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateCurrentDoctors(String category) {
+  updateCurrentDoctors(
+    String category,
+    Function getSpecailityLocalization,
+    AppLocalizations localizations,
+  ) {
     currentCat = currentCat == category ? "" : category;
 
     if (currentCat == "") {
@@ -76,7 +89,11 @@ class FireStoreProvider extends ChangeNotifier {
       filteredDoctors = allDoctors
           .where(
             (doctor) =>
-                doctor!.speciality.toLowerCase() == currentCat.toLowerCase(),
+                getSpecailityLocalization(
+                  doctor!.speciality.toLowerCase(),
+                  localizations,
+                ) ==
+                currentCat.toLowerCase(),
           )
           .toList();
     }

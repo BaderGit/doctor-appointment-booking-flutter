@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:final_project/l10n/app_localizations.dart';
 
 class MainLayout extends StatefulWidget {
-  const MainLayout({Key? key}) : super(key: key);
+  const MainLayout({super.key});
 
   @override
   State<MainLayout> createState() => _MainLayoutState();

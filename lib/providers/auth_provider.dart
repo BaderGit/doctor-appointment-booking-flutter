@@ -36,13 +36,11 @@ class AppAuthProvider extends ChangeNotifier {
   TextEditingController ageController = TextEditingController();
 
   String selectedGender = "male";
-  TextEditingController imgUrlController = TextEditingController();
 
   TextEditingController doctorEmailController = TextEditingController();
   TextEditingController doctorPasswordController = TextEditingController();
   TextEditingController doctorUserNameController = TextEditingController();
 
-  TextEditingController doctorImgUrlController = TextEditingController();
   TextEditingController forgetPasswordEmailController = TextEditingController();
   String? selectedSpeciality;
   String? selectedHospital;
@@ -100,8 +98,6 @@ class AppAuthProvider extends ChangeNotifier {
               localization.rightUserTypeValidation,
               localization,
             );
-            // doctorEmailController.clear();
-            // doctorPasswordController.clear();
 
             isLoading = false;
             notifyListeners();
@@ -109,8 +105,6 @@ class AppAuthProvider extends ChangeNotifier {
             return null;
           }
         } else {
-          // isLoading = true;
-          // notifyListeners();
           UserCredential? credentials = await AuthHelper.authHelper.signIn(
             emailController.text,
             passwordController.text,
@@ -199,12 +193,22 @@ class AppAuthProvider extends ChangeNotifier {
     }
   }
 
-  signOut() {
-    AuthHelper.authHelper.signOut();
+  signOut() async {
+    await AuthHelper.authHelper.signOut();
     AppRouter.navigateToWidgetWithReplacment(UserTypeScreen());
     SpHelper.spHelper.setUserType("");
-
-    emailController.text = "";
+    emailController.clear();
+    passwordController.clear();
+    ageController.clear();
+    doctorUserNameController.clear();
+    forgetPasswordEmailController.clear();
+    doctorEmailController.clear();
+    doctorPasswordController.clear();
+    selectedGender = "male";
+    selectedSpeciality = null;
+    selectedHospital = null;
+    selectedPatientImage = null;
+    selectedDoctorImage = null;
   }
 
   Future<UserCredential?> userSignUp(AppLocalizations localization) async {
@@ -309,8 +313,6 @@ class AppAuthProvider extends ChangeNotifier {
           selectedHospital = null;
           selectedDoctorImage = null;
           doctorPasswordController.clear();
-
-          doctorImgUrlController.clear();
           notifyListeners();
         }
 

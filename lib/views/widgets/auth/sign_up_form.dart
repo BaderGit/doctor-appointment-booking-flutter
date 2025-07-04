@@ -1,10 +1,10 @@
+import 'package:final_project/l10n/app_localizations.dart';
 import 'package:final_project/providers/auth_provider.dart';
 import 'package:final_project/providers/firestore_provider.dart';
-import 'package:final_project/views/widgets/button.dart';
+import 'package:final_project/utils/config.dart';
+import 'package:final_project/views/widgets/general/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../utils/config.dart';
-import '../../../../l10n/app_localizations.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -14,6 +14,7 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  bool obsecurePass = true;
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
@@ -127,14 +128,38 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               Config.spaceSmall,
               TextFormField(
-                controller: auth.passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: localizations.passwordHint,
-                  prefixIcon: const Icon(Icons.lock_outline),
-                ),
                 validator: (value) =>
                     auth.passwordValidation(value, localizations),
+                controller: auth.passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                cursorColor: Config.primaryColor,
+                obscureText: obsecurePass,
+                decoration: InputDecoration(
+                  hintText: localizations.passwordHint,
+                  labelText: localizations.passwordLabel,
+                  alignLabelWithHint: true,
+                  prefixIcon: const Icon(Icons.lock_outline),
+                  prefixIconColor: Config.primaryColor,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        obsecurePass = !obsecurePass;
+                      });
+                    },
+                    icon: obsecurePass
+                        ? Icon(
+                            Icons.visibility_off_outlined,
+                            color: Colors.black38,
+                          )
+                        : Icon(
+                            Icons.visibility_outlined,
+                            color: Config.primaryColor,
+                          ),
+                    tooltip: obsecurePass
+                        ? localizations.showPassword
+                        : localizations.hidePassword,
+                  ),
+                ),
               ),
               Config.spaceMedium,
               Button(

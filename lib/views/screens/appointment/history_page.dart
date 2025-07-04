@@ -43,7 +43,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     ),
                   ),
                   Config.spaceSmall,
-                  fireStore.allStoredAppointments.isEmpty
+                  filteredPatientStoredAppointments.isEmpty
                       ? Expanded(
                           child: Center(
                             child: Column(

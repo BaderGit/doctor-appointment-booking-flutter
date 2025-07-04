@@ -1,7 +1,8 @@
 import 'package:final_project/providers/firestore_provider.dart';
+import 'package:final_project/providers/language_provider.dart';
 import 'package:final_project/utils/config.dart';
 import 'package:final_project/views/widgets/appointment/appointment_card.dart';
-import 'package:final_project/views/widgets/category_card.dart';
+import 'package:final_project/views/widgets/general/category_card.dart';
 import 'package:final_project/views/widgets/doctor/doctor_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,36 +22,24 @@ class _PatientHomePageState extends State<PatientHomePage> {
     Config().init(context);
     final localizations = AppLocalizations.of(context)!;
     List<Map<String, dynamic>> medCat = [
-      {
-        "icon": FontAwesomeIcons.userDoctor,
-        "category": AppLocalizations.of(context)!.general,
-      },
+      {"icon": FontAwesomeIcons.userDoctor, "category": localizations.general},
       {
         "icon": FontAwesomeIcons.heartPulse,
-        "category": AppLocalizations.of(context)!.cardiology,
+        "category": localizations.cardiology,
       },
-      {
-        "icon": FontAwesomeIcons.lungs,
-        "category": AppLocalizations.of(context)!.respirations,
-      },
-      {
-        "icon": FontAwesomeIcons.hand,
-        "category": AppLocalizations.of(context)!.dermatology,
-      },
+      {"icon": FontAwesomeIcons.lungs, "category": localizations.respirations},
+      {"icon": FontAwesomeIcons.hand, "category": localizations.dermatology},
       {
         "icon": FontAwesomeIcons.personPregnant,
-        "category": AppLocalizations.of(context)!.gynecology,
+        "category": localizations.gynecology,
       },
-      {
-        "icon": FontAwesomeIcons.teeth,
-        "category": AppLocalizations.of(context)!.dental,
-      },
+      {"icon": FontAwesomeIcons.teeth, "category": localizations.dental},
     ];
 
-    return Consumer<FireStoreProvider>(
-      builder: (context, provider, child) {
+    return Consumer2<FireStoreProvider, LanguageProvider>(
+      builder: (context, fireStore, lang, child) {
         return Scaffold(
-          body: provider.patient == null
+          body: fireStore.patient == null
               ? const Center(child: CircularProgressIndicator())
               : Padding(
                   padding: const EdgeInsets.symmetric(
@@ -67,7 +56,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
-                                "${localizations.welcome} ${provider.patient!.name}",
+                                "${localizations.welcome} ${fireStore.patient!.name}",
                                 style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -77,7 +66,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                 child: CircleAvatar(
                                   radius: 30,
                                   backgroundImage: NetworkImage(
-                                    provider.patient!.imgUrl,
+                                    fireStore.patient!.imgUrl,
                                   ),
                                 ),
                               ),
@@ -92,13 +81,13 @@ class _PatientHomePageState extends State<PatientHomePage> {
                             ),
                           ),
                           Config.spaceSmall,
-                          provider.patienttodaysAppointments.isNotEmpty
+                          fireStore.patienttodaysAppointments.isNotEmpty
                               ? AppointmentCard(
-                                  doctor: provider
+                                  doctor: fireStore
                                       .patienttodaysAppointments[0]!
                                       .doctor,
                                   appointment:
-                                      provider.patienttodaysAppointments[0]!,
+                                      fireStore.patienttodaysAppointments[0]!,
                                   color: Config.primaryColor,
                                 )
                               : Container(
@@ -138,14 +127,16 @@ class _PatientHomePageState extends State<PatientHomePage> {
                               ) {
                                 return GestureDetector(
                                   onTap: () {
-                                    provider.updateCurrentDoctors(
+                                    fireStore.updateCurrentDoctors(
                                       medCat[index]["category"],
+                                      lang.getSpecialityLocalization,
+                                      localizations,
                                     );
                                   },
                                   child: CategoryCard(
                                     catName: medCat[index]["category"],
                                     catIcon: medCat[index]["icon"],
-                                    currentCat: provider.currentCat,
+                                    currentCat: fireStore.currentCat,
                                   ),
                                 );
                               }),
@@ -161,21 +152,19 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           ),
                           Config.spaceSmall,
                           Column(
-                            children:
-                                provider.filteredDoctors.isEmpty &&
-                                    provider.currentCat == ""
+                            children: fireStore.currentCat == ""
                                 ? List.generate(
-                                    provider.allDoctors.length,
+                                    fireStore.allDoctors.length,
                                     (index) => DoctorCard(
-                                      doctor: provider.allDoctors[index],
+                                      doctor: fireStore.allDoctors[index],
                                     ),
                                   )
-                                : provider.filteredDoctors.isEmpty
+                                : fireStore.filteredDoctors.isEmpty
                                 ? [Text(localizations.noDoctorsAvailable)]
                                 : List.generate(
-                                    provider.filteredDoctors.length,
+                                    fireStore.filteredDoctors.length,
                                     (index) => DoctorCard(
-                                      doctor: provider.filteredDoctors[index],
+                                      doctor: fireStore.filteredDoctors[index],
                                     ),
                                   ),
                           ),

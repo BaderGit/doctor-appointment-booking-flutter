@@ -119,12 +119,9 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                lang.getGenderLocalization(
-                                                  filteredDoctorsAppointments[index]!
-                                                      .patient
-                                                      .age,
-                                                  localizations,
-                                                ),
+                                                filteredDoctorsAppointments[index]!
+                                                    .patient
+                                                    .age,
 
                                                 style: const TextStyle(
                                                   color: Colors.grey,
@@ -178,38 +175,47 @@ class ScheduleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          const Icon(
-            Icons.calendar_today,
-            color: Config.primaryColor,
-            size: 15,
+    final localizations = AppLocalizations.of(context)!;
+    return Consumer<LanguageProvider>(
+      builder: (context, lang, child) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(10),
           ),
-          const SizedBox(width: 5),
-          Text(
-            '$day, $date',
-            style: const TextStyle(color: Config.primaryColor),
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const Icon(
+                Icons.calendar_today,
+                color: Config.primaryColor,
+                size: 15,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                '${lang.getDayLocalization(day, localizations)}, $date',
+                style: const TextStyle(color: Config.primaryColor),
+              ),
+              const SizedBox(width: 20),
+              const Icon(
+                Icons.access_alarm,
+                color: Config.primaryColor,
+                size: 17,
+              ),
+              const SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  lang.getTimeLocalization(time, localizations),
+                  style: const TextStyle(color: Config.primaryColor),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 20),
-          const Icon(Icons.access_alarm, color: Config.primaryColor, size: 17),
-          const SizedBox(width: 5),
-          Flexible(
-            child: Text(
-              time,
-              style: const TextStyle(color: Config.primaryColor),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

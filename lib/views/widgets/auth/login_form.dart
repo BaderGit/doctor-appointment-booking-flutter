@@ -1,10 +1,10 @@
+import 'package:final_project/l10n/app_localizations.dart';
 import 'package:final_project/providers/auth_provider.dart';
 import 'package:final_project/providers/firestore_provider.dart';
-import 'package:final_project/views/widgets/button.dart';
+import 'package:final_project/utils/config.dart';
+import 'package:final_project/views/widgets/general/button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../utils/config.dart';
-import '../../../../l10n/app_localizations.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});

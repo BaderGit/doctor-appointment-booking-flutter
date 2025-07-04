@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppRouter {
   static GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
@@ -12,7 +11,7 @@ class AppRouter {
         },
       ),
     );
-    print(x);
+
     return x;
   }
 

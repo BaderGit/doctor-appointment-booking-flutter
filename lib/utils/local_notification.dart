@@ -81,14 +81,14 @@ class LocalNotification {
     ).parse("${appointment.date} ${appointment.time}");
 
     final appointmentReminder = appointmentDateTime.subtract(Duration(days: 1));
-    final scheduledAppointmentTime = tz.TZDateTime.from(
+    final formatedAppointmentReminder = tz.TZDateTime.from(
       appointmentReminder,
       cairo,
     );
 
-    if (scheduledAppointmentTime.subtract(Duration(days: 1)).day == now.day) {
-      if (appointmentReminder.isAfter(now)) {
-        showScheduledNotification(scheduledAppointmentTime);
+    if (formatedAppointmentReminder.day == now.day) {
+      if (formatedAppointmentReminder.isAfter(now)) {
+        showScheduledNotification(formatedAppointmentReminder);
       }
     }
 

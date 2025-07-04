@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:final_project/data/sp_helper.dart';
 import 'package:final_project/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +15,7 @@ class LanguageProvider extends ChangeNotifier {
 
   void toggleLanguage() async {
     isArabic = isArabic ? false : true;
-    log("language is arabic now $isArabic");
+
     currentLocale = currentLocale.languageCode == 'en'
         ? const Locale('ar')
         : const Locale('en');

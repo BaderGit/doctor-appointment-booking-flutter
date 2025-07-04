@@ -6,8 +6,8 @@ import 'package:final_project/models/patient.dart';
 import 'package:final_project/providers/firestore_provider.dart';
 import 'package:final_project/utils/config.dart';
 
-import 'package:final_project/views/widgets/button.dart';
-import 'package:final_project/views/widgets/custom_appbar.dart';
+import 'package:final_project/views/widgets/general/button.dart';
+import 'package:final_project/views/widgets/general/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

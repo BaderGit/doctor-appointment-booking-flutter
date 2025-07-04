@@ -1,9 +1,8 @@
 import 'package:final_project/providers/auth_provider.dart';
 import 'package:final_project/providers/firestore_provider.dart';
+import 'package:final_project/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../utils/config.dart';
 
 class Button extends StatelessWidget {
   const Button({
