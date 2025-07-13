@@ -41,7 +41,7 @@ class DoctorCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            doctor!.name,
+                            "Dr. ${doctor!.name}",
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

@@ -521,12 +521,6 @@ abstract class AppLocalizations {
   /// **'Book Appointment'**
   String get bookAppointment;
 
-  /// No description provided for @doctorNameTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Dr {name}'**
-  String doctorNameTitle(Object name);
-
   /// No description provided for @doctorQualifications.
   ///
   /// In en, this message translates to:

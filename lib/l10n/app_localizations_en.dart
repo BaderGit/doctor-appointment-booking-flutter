@@ -226,11 +226,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookAppointment => 'Book Appointment';
 
   @override
-  String doctorNameTitle(Object name) {
-    return 'Dr $name';
-  }
-
-  @override
   String get doctorQualifications => 'MBBS (International Medical University, Malaysia), MRCP (Royal College of Physicians, United Kingdom)';
 
   @override

@@ -68,7 +68,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                           margin: const EdgeInsets.fromLTRB(0, 45, 0, 0),
                           child: SizedBox(
                             width: 300,
-                            height: 260,
+                            height: 240,
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: Column(

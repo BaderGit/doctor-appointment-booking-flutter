@@ -226,11 +226,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bookAppointment => 'حجز موعد';
 
   @override
-  String doctorNameTitle(Object name) {
-    return 'د. $name';
-  }
-
-  @override
   String get doctorQualifications => 'بكالوريوس في الطب والجراحة (الجامعة الطبية الدولية، ماليزيا)، زمالة الكلية الملكية للأطباء (المملكة المتحدة)';
 
   @override

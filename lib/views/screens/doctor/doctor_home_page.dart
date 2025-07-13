@@ -119,9 +119,7 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                filteredDoctorsAppointments[index]!
-                                                    .patient
-                                                    .age,
+                                                "age: ${filteredDoctorsAppointments[index]!.patient.age}",
 
                                                 style: const TextStyle(
                                                   color: Colors.grey,

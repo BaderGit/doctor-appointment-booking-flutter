@@ -142,7 +142,7 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                       ],
                     ),
-                  Config.spaceMedium,
+                  Config.spaceSmall,
 
                   Center(
                     child: TextButton(

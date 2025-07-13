@@ -53,7 +53,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            localizations.doctorNameTitle(widget.doctor.name),
+                            "Dr. ${widget.doctor.name}",
                             style: const TextStyle(color: Colors.white),
                           ),
                           const SizedBox(height: 2),

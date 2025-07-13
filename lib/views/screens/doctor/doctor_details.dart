@@ -94,7 +94,7 @@ class AboutDoctor extends StatelessWidget {
               ),
               Config.spaceMedium,
               Text(
-                localizations.doctorNameTitle(doctor.name),
+                "Dr. ${doctor.name}",
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 24.0,
