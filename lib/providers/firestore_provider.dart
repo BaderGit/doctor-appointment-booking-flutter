@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:final_project/data/auth_helper.dart';
 import 'package:final_project/data/firestore_helper.dart';
+import 'package:final_project/data/sp_helper.dart';
 import 'package:final_project/l10n/app_localizations.dart';
 
 import 'package:final_project/models/appointment.dart';
@@ -109,6 +110,41 @@ class FireStoreProvider extends ChangeNotifier {
 
     await getAllAppointments();
     await getTodaysAppointment();
+  }
+
+  deleteDoctor(String id) async {
+    isLoading = true;
+    notifyListeners();
+    final firebaseAuth = AuthHelper.authHelper.firebaseAuth;
+    String? doctorPassword = await SpHelper.spHelper.getDoctorPassword();
+    String? staffEmail = await SpHelper.spHelper.getStaffEmail();
+    String? staffPassword = await SpHelper.spHelper.getStaffPassword();
+
+    await AuthHelper.authHelper.signOut();
+
+    var doctor = await FireStoreHelper.fireStoreHelper.getDoctorFromFireStore(
+      id,
+    );
+    // log(doctor!.email.toString() + "this is doctor email");
+    // log(doctorPassword! + "this is doctor password");
+    await firebaseAuth.signInWithEmailAndPassword(
+      email: doctor!.email,
+      password: doctorPassword ?? "",
+    );
+    // log("this is current user " + firebaseAuth.currentUser!.toString());
+    await firebaseAuth.currentUser!.delete();
+    await FireStoreHelper.fireStoreHelper.deleteDoctorFromFireStore(id);
+    allDoctors.removeWhere((appointment) => appointment!.id == id);
+
+    // notifyListeners();
+    await getAllDoctors();
+
+    await firebaseAuth.signInWithEmailAndPassword(
+      email: staffEmail ?? "",
+      password: staffPassword ?? "",
+    );
+    isLoading = false;
+    notifyListeners();
   }
 
   deleteStoredAppointment(String id) async {

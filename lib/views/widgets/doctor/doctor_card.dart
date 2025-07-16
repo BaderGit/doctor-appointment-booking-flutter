@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 
 class DoctorCard extends StatelessWidget {
   final DoctorModel? doctor;
+  final bool isStaff;
 
-  const DoctorCard({super.key, required this.doctor});
+  const DoctorCard({super.key, required this.doctor, this.isStaff = false});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,9 @@ class DoctorCard extends StatelessWidget {
             ),
             //pass the details to detail page
             onTap: () {
-              AppRouter.navigateToWidget(DoctorDetails(doctor: doctor));
+              AppRouter.navigateToWidget(
+                DoctorDetails(doctor: doctor, isStaff: isStaff ? true : false),
+              );
             },
           ),
         );

@@ -5,6 +5,7 @@ import 'dart:math' hide log;
 import 'package:final_project/data/auth_helper.dart';
 import 'package:final_project/data/firestore_helper.dart';
 import 'package:final_project/data/sp_helper.dart';
+
 import 'package:final_project/data/storage_helper.dart';
 import 'package:final_project/l10n/app_localizations.dart';
 import 'package:final_project/main_layout.dart';
@@ -110,6 +111,8 @@ class AppAuthProvider extends ChangeNotifier {
             passwordController.text,
             localization,
           );
+          SpHelper.spHelper.setStaffPassword(passwordController.text);
+          SpHelper.spHelper.setStaffEmail(emailController.text);
 
           if (credentials != null) {
             if (userType == "patient") {
@@ -130,9 +133,8 @@ class AppAuthProvider extends ChangeNotifier {
             } else if (userType == "staff") {
               final staff = await FireStoreHelper.fireStoreHelper
                   .getStaffFromFireStore(credentials.user!.uid);
-              log("this is a staff $staff");
+
               if (staff) {
-                log("in staff if ");
                 AppRouter.navigateToWidgetWithReplacment(StaffScreen());
               } else {
                 AppRouter.navigateToWidgetWithReplacment(UserTypeScreen());
@@ -163,6 +165,7 @@ class AppAuthProvider extends ChangeNotifier {
   checkUser(String? userType) async {
     User? user;
     user = await AuthHelper.authHelper.checkUser();
+
     if (user == null) {
       AppRouter.navigateToWidgetWithReplacment(UserTypeScreen());
     } else if (userType == "patient") {
@@ -177,6 +180,7 @@ class AppAuthProvider extends ChangeNotifier {
       final staff = await FireStoreHelper.fireStoreHelper.getStaffFromFireStore(
         user.uid,
       );
+
       if (staff) {
         AppRouter.navigateToWidgetWithReplacment(StaffScreen());
       } else {
@@ -196,7 +200,7 @@ class AppAuthProvider extends ChangeNotifier {
   signOut() async {
     await AuthHelper.authHelper.signOut();
     AppRouter.navigateToWidgetWithReplacment(UserTypeScreen());
-    SpHelper.spHelper.setUserType("");
+    // SpHelper.spHelper.setUserType("");
     emailController.clear();
     passwordController.clear();
     ageController.clear();
@@ -269,6 +273,8 @@ class AppAuthProvider extends ChangeNotifier {
 
   Future<UserCredential?> doctorSignUp(AppLocalizations localization) async {
     try {
+      String? storedStaffPassword;
+
       isLoading = true;
       notifyListeners();
       if (selectedDoctorImage == null) {
@@ -281,11 +287,16 @@ class AppAuthProvider extends ChangeNotifier {
         return null;
       }
       if (signUpKey.currentState!.validate()) {
+        User? currentUser = AuthHelper.authHelper.firebaseAuth.currentUser;
+        String? currentUserEmail =
+            AuthHelper.authHelper.firebaseAuth.currentUser?.email;
+
         UserCredential? credentials = await AuthHelper.authHelper.signUp(
           doctorEmailController.text,
           doctorPasswordController.text,
           localization,
         );
+        SpHelper.spHelper.setDoctorPassword(doctorPasswordController.text);
         if (credentials != null) {
           String? doctorImageUrl = await StorageHelper.storageHelper
               .uploadImage(selectedDoctorImage!);
@@ -302,6 +313,7 @@ class AppAuthProvider extends ChangeNotifier {
             rating: ((random.nextInt(6) + 45) / 10).toString(),
           );
           await FireStoreHelper.fireStoreHelper.addDoctorToFireStore(doctor);
+
           CustomShowDialog.showDialogFunction(
             localization.doctorAddSuccess,
             localization,
@@ -313,10 +325,17 @@ class AppAuthProvider extends ChangeNotifier {
           selectedHospital = null;
           selectedDoctorImage = null;
           doctorPasswordController.clear();
-          notifyListeners();
-        }
 
-        return credentials;
+          notifyListeners();
+          if (currentUser != null && currentUserEmail != null) {
+            storedStaffPassword = await SpHelper.spHelper.getStaffPassword();
+            await AuthHelper.authHelper.signIn(
+              currentUserEmail,
+              storedStaffPassword ?? "",
+              localization,
+            );
+          }
+        }
       }
     } catch (e) {
       log(e.toString());
@@ -326,7 +345,9 @@ class AppAuthProvider extends ChangeNotifier {
     }
     return null;
   }
+  // deleteDoctorAccount(){
 
+  // }
   forgetPassword(AppLocalizations localization) async {
     if (forgetPassUpKey.currentState!.validate()) {
       isLoading = true;

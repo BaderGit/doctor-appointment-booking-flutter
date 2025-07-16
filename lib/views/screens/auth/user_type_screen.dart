@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserTypeScreen extends StatefulWidget {
-  const UserTypeScreen({Key? key}) : super(key: key);
+  const UserTypeScreen({super.key});
 
   @override
   State<UserTypeScreen> createState() => _UserTypeScreenState();
@@ -55,7 +55,6 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // Welcome text
               Text(
                 localizations.welcomeText,
                 style: const TextStyle(
@@ -65,7 +64,6 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
               ),
               Config.spaceSmall,
 
-              // User type selection
               Text(
                 localizations.selectUserType,
                 style: const TextStyle(
@@ -75,7 +73,6 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
               ),
               Config.spaceSmall,
 
-              // Patient Radio Button
               RadioListTile<String>(
                 activeColor: Config.primaryColor,
                 title: Text(localizations.patient),
@@ -84,7 +81,6 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                 onChanged: _handleUserTypeChange,
               ),
 
-              // Doctor Radio Button
               RadioListTile<String>(
                 activeColor: Config.primaryColor,
                 title: Text(localizations.doctor),
@@ -93,7 +89,6 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                 onChanged: _handleUserTypeChange,
               ),
 
-              // Staff Radio Button
               RadioListTile<String>(
                 activeColor: Config.primaryColor,
                 title: Text(localizations.staff),
@@ -104,7 +99,6 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
 
               Config.spaceMedium,
 
-              // Continue button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

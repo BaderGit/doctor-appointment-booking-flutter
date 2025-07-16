@@ -46,6 +46,7 @@
   "category": "الفئة",
   "topDoctors": "أفضل الأطباء",
   "noDoctorsAvailable": "لا يوجد أطباء متاحين",
+  "noDoctors": "لا يوجد أطباء ",
   "yearsOld": "سنة",
   "profile": "الملف الشخصي",
   "appointmentSchedule": "جدول المواعيد",
@@ -66,6 +67,7 @@
   "makeAppointment": "حجز موعد",
   "appointmentUpdatedSuccessfully": "تم تحديث موعدك مع {doctorName} بنجاح.",
   "appointmentScheduledSuccessfully": "تم جدولة موعدك مع {doctorName} بنجاح.",
+  "deleteDoctor":"حذف الطبيب",
   
     "general": "عام",
     "cardiology": "قلب",

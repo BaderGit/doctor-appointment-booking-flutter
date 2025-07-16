@@ -8,14 +8,16 @@ import 'package:final_project/utils/config.dart';
 import 'package:final_project/views/screens/appointment/booking_page.dart';
 import 'package:final_project/views/widgets/general/button.dart';
 import 'package:final_project/views/widgets/general/custom_appbar.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class DoctorDetails extends StatefulWidget {
-  const DoctorDetails({super.key, required this.doctor});
+  const DoctorDetails({super.key, required this.doctor, this.isStaff = false});
   final DoctorModel? doctor;
+  final bool isStaff;
 
   @override
   State<DoctorDetails> createState() => _DoctorDetailsState();
@@ -28,9 +30,11 @@ class _DoctorDetailsState extends State<DoctorDetails> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final provider = Provider.of<FireStoreProvider>(context, listen: false);
-      provider.getPatient();
-      patient = provider.patient!;
+      if (!widget.isStaff) {
+        final provider = Provider.of<FireStoreProvider>(context, listen: false);
+        provider.getPatient();
+        patient = provider.patient!;
+      }
     });
     doctor = widget.doctor!;
     super.initState();
@@ -45,27 +49,39 @@ class _DoctorDetailsState extends State<DoctorDetails> {
         appTitle: localizations.doctorDetailsTitle,
         icon: const FaIcon(Icons.arrow_back_ios),
       ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            AboutDoctor(doctor: doctor),
-            DetailBody(doctor: doctor),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Button(
-                width: double.infinity,
-                title: localizations.bookAppointment,
-                onPressed: () {
-                  AppRouter.navigateToWidget(
-                    BookingPage(doctor: doctor, patient: patient),
-                  );
-                },
-                disable: false,
-              ),
+      body: Consumer<FireStoreProvider>(
+        builder: (context, fireStore, child) {
+          return SafeArea(
+            child: Column(
+              children: <Widget>[
+                AboutDoctor(doctor: doctor),
+                DetailBody(doctor: doctor),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Button(
+                    width: double.infinity,
+                    title: widget.isStaff
+                        ? localizations.deleteDoctor
+                        : localizations.bookAppointment,
+                    onPressed: () async {
+                      if (widget.isStaff) {
+                        await fireStore.deleteDoctor(doctor.id ?? "");
+
+                        AppRouter.popRoute();
+                      } else {
+                        AppRouter.navigateToWidget(
+                          BookingPage(doctor: doctor, patient: patient),
+                        );
+                      }
+                    },
+                    disable: false,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

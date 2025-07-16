@@ -350,8 +350,14 @@ abstract class AppLocalizations {
   /// No description provided for @noDoctorsAvailable.
   ///
   /// In en, this message translates to:
-  /// **'No doctors available'**
+  /// **'No Doctors Available'**
   String get noDoctorsAvailable;
+
+  /// No description provided for @noDoctors.
+  ///
+  /// In en, this message translates to:
+  /// **'No Doctors'**
+  String get noDoctors;
 
   /// No description provided for @yearsOld.
   ///
@@ -820,6 +826,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send Password Reset'**
   String get resetPasswordRequestButtonText;
+
+  /// No description provided for @deleteDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Doctor'**
+  String get deleteDoctor;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

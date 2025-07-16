@@ -135,7 +135,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get topDoctors => 'Top Doctors';
 
   @override
-  String get noDoctorsAvailable => 'No doctors available';
+  String get noDoctorsAvailable => 'No Doctors Available';
+
+  @override
+  String get noDoctors => 'No Doctors';
 
   @override
   String get yearsOld => 'Years Old';
@@ -378,4 +381,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resetPasswordRequestButtonText => 'Send Password Reset';
+
+  @override
+  String get deleteDoctor => 'Delete Doctor';
 }

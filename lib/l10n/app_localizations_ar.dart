@@ -138,6 +138,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noDoctorsAvailable => 'لا يوجد أطباء متاحين';
 
   @override
+  String get noDoctors => 'لا يوجد أطباء ';
+
+  @override
   String get yearsOld => 'سنة';
 
   @override
@@ -378,4 +381,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get resetPasswordRequestButtonText => 'اعادة تعيين كلمة السر';
+
+  @override
+  String get deleteDoctor => 'حذف الطبيب';
 }

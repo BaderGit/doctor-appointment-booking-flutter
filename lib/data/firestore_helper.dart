@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:final_project/models/patient.dart';
 
 import 'package:final_project/models/appointment.dart';
@@ -78,6 +81,7 @@ class FireStoreHelper {
     DocumentSnapshot<Map<String, dynamic>> documentSnapShot =
         await staffCollection.doc(id).get();
     Map<String, dynamic>? data = documentSnapShot.data();
+    log(data.toString());
     if (data != null) {
       return true;
     }
@@ -124,6 +128,14 @@ class FireStoreHelper {
   deleteAppointmentFromFireStore(String id) async {
     try {
       await appointmentCollection.doc(id).delete();
+    } catch (e) {
+      print('Error deleting document: $e');
+    }
+  }
+
+  deleteDoctorFromFireStore(String id) async {
+    try {
+      await doctorCollection.doc(id).delete();
     } catch (e) {
       print('Error deleting document: $e');
     }

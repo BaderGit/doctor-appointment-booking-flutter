@@ -141,7 +141,8 @@
   "noAppointmentToday": "No Appointment Today",
   "category": "Category",
   "topDoctors": "Top Doctors",
-  "noDoctorsAvailable": "No doctors available",
+  "noDoctorsAvailable": "No Doctors Available",
+  "noDoctors": "No Doctors",
   "yearsOld": "Years Old",
   "profile": "Profile",
   "appointmentSchedule": "Appointment Schedule",
@@ -233,7 +234,8 @@
   "rightUserTypeValidation":"please select the right user type",
 "ok":"Ok",
 "resetPasswordRequest":"request was sent to ur email",
-"resetPasswordRequestButtonText":"Send Password Reset"
+"resetPasswordRequestButtonText":"Send Password Reset",
+"deleteDoctor":"Delete Doctor"
   
   
 }
