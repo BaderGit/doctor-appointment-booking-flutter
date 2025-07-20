@@ -2,27 +2,41 @@ import 'package:final_project/data/sp_helper.dart';
 import 'package:final_project/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
+// Provider class for managing language and localization in the app
 class LanguageProvider extends ChangeNotifier {
+  // Current locale setting (defaults to English)
   Locale currentLocale = Locale("en");
+
+  // Flag to track if Arabic is currently selected
   bool isArabic = false;
+
+  // Constructor - initializes by getting the current locale
   LanguageProvider() {
     getCurrentLocale();
   }
+
+  // Gets the current locale from shared preferences
   getCurrentLocale() async {
     currentLocale = Locale(await SpHelper.spHelper.getLanguage() ?? "en");
     notifyListeners();
   }
 
+  // Toggles between English and Arabic languages
   void toggleLanguage() async {
+    // Flip the Arabic flag
     isArabic = isArabic ? false : true;
 
+    // Switch between English and Arabic locales
     currentLocale = currentLocale.languageCode == 'en'
         ? const Locale('ar')
         : const Locale('en');
+
+    // Save the new language preference
     await SpHelper.spHelper.setLanguage(currentLocale.toString());
     notifyListeners();
   }
 
+  // Returns the localized string for medical specialities
   String getSpecialityLocalization(
     String specialityKey,
     AppLocalizations localization,
@@ -46,6 +60,7 @@ class LanguageProvider extends ChangeNotifier {
     }
   }
 
+  // Returns the localized string for hospital names
   String getHospitalNameLocalization(
     String hospital,
     AppLocalizations localization,
@@ -69,6 +84,7 @@ class LanguageProvider extends ChangeNotifier {
     }
   }
 
+  // Returns the localized string for gender
   String getGenderLocalization(String gender, AppLocalizations localization) {
     switch (gender.toLowerCase()) {
       case 'male':
@@ -81,6 +97,7 @@ class LanguageProvider extends ChangeNotifier {
     }
   }
 
+  // Returns the localized string for appointment times
   String getTimeLocalization(String time, AppLocalizations localization) {
     switch (time.toLowerCase()) {
       case '9:00 am':
@@ -105,6 +122,7 @@ class LanguageProvider extends ChangeNotifier {
     }
   }
 
+  // Returns the localized string for days of the week
   String getDayLocalization(String day, AppLocalizations localization) {
     switch (day.toLowerCase()) {
       case 'monday':

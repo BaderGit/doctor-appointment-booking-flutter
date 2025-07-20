@@ -1,38 +1,44 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:final_project/models/patient.dart';
-
 import 'package:final_project/models/appointment.dart';
 import 'package:final_project/models/doctor.dart';
 
 class FireStoreHelper {
   FireStoreHelper._();
+
   static FireStoreHelper fireStoreHelper = FireStoreHelper._();
+
   FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+
+  // Reference to the 'patients' collection
   var paitentCollection = FirebaseFirestore.instance.collection('patients');
+  // Reference to the 'doctors' collection
   var doctorCollection = FirebaseFirestore.instance.collection('doctors');
+  // Reference to the 'staffs' collection
   var staffCollection = FirebaseFirestore.instance.collection('staffs');
+  // Reference to the 'appointments' collection
   var appointmentCollection = FirebaseFirestore.instance.collection(
     'appointments',
   );
+  // Reference to the 'stored_appointments' collection (archive/history)
   var storedAppointmentCollection = FirebaseFirestore.instance.collection(
     'stored_appointments',
   );
 
-  //backend firebase code to add user to firestore
-
+  // Adds a new patient to Firestore
   Future<bool> addUserToFireStore(PatientModel patient) async {
     await paitentCollection.doc(patient.id).set(patient.toMap());
     return true;
   }
 
-  //backend firebase code to add doctor  to firestore
+  // Adds a new doctor to Firestore
   addDoctorToFireStore(DoctorModel doctor) async {
     await doctorCollection.doc(doctor.id).set(doctor.toMap());
   }
 
+  // Adds a new appointment to Firestore
+  // Returns the appointment ID
   Future<String?> addAppointmentToFireStore(
     AppointmentModel appointment,
   ) async {
@@ -40,6 +46,8 @@ class FireStoreHelper {
     return appointment.id;
   }
 
+  // Stores an appointment in the archive/history collection
+  // Returns the appointment ID
   Future<String?> storeAppointmentToFireStore(
     AppointmentModel appointment,
   ) async {
@@ -48,10 +56,9 @@ class FireStoreHelper {
         .set(appointment.toMap());
     return appointment.id;
   }
-  //backend firebase code to get user  to firestore
 
-  //backend firebase code to get appointment  to firestore
-
+  // Retrieves an appointment by ID from Firestore
+  // Returns null if not found
   Future<AppointmentModel?>? getAppointmentFromFireStore(String? id) async {
     try {
       DocumentSnapshot<Map<String, dynamic>> documentSnapShot =
@@ -67,6 +74,7 @@ class FireStoreHelper {
     return null;
   }
 
+  // Retrieves a patient by ID from Firestore
   Future<PatientModel?>? getPatientFromFireStore(String? id) async {
     DocumentSnapshot<Map<String, dynamic>> documentSnapShot =
         await paitentCollection.doc(id).get();
@@ -77,17 +85,19 @@ class FireStoreHelper {
     return null;
   }
 
+  // Checks if a staff member exists in Firestore by ID
   Future<bool> getStaffFromFireStore(String? id) async {
     DocumentSnapshot<Map<String, dynamic>> documentSnapShot =
         await staffCollection.doc(id).get();
     Map<String, dynamic>? data = documentSnapShot.data();
-    log(data.toString());
+
     if (data != null) {
       return true;
     }
     return false;
   }
 
+  // Retrieves a doctor by ID from Firestore
   Future<DoctorModel?>? getDoctorFromFireStore(String? id) async {
     DocumentSnapshot<Map<String, dynamic>>? documentSnapShot =
         await doctorCollection.doc(id).get();
@@ -99,6 +109,7 @@ class FireStoreHelper {
     return null;
   }
 
+  // Retrieves all doctors from Firestore
   Future<List<DoctorModel>> getAllDoctors() async {
     var doctorsQuerySnapShot = await doctorCollection.get();
     List<DoctorModel> allDoctors = doctorsQuerySnapShot.docs
@@ -107,6 +118,7 @@ class FireStoreHelper {
     return allDoctors;
   }
 
+  // Retrieves all appointments from Firestore
   Future<List<AppointmentModel>> getAllAppointments() async {
     var appointmentsQuerySnapShot = await appointmentCollection.get();
     List<AppointmentModel> allAppointments = appointmentsQuerySnapShot.docs
@@ -115,6 +127,7 @@ class FireStoreHelper {
     return allAppointments;
   }
 
+  // Retrieves all stored (history) appointments from Firestore
   Future<List<AppointmentModel>> getAllStoredAppointments() async {
     var storedAppointmentsQuerySnapShot = await storedAppointmentCollection
         .get();
@@ -125,6 +138,7 @@ class FireStoreHelper {
     return allStoredAppointments;
   }
 
+  // Deletes an appointment by ID from Firestore
   deleteAppointmentFromFireStore(String id) async {
     try {
       await appointmentCollection.doc(id).delete();
@@ -133,6 +147,7 @@ class FireStoreHelper {
     }
   }
 
+  // Deletes a doctor by ID from Firestore
   deleteDoctorFromFireStore(String id) async {
     try {
       await doctorCollection.doc(id).delete();
@@ -141,6 +156,7 @@ class FireStoreHelper {
     }
   }
 
+  // Deletes a stored (history) appointment by ID from Firestore
   deleteStoredAppointmentFromFireStore(String id) async {
     try {
       await storedAppointmentCollection.doc(id).delete();
@@ -149,6 +165,7 @@ class FireStoreHelper {
     }
   }
 
+  // Updates an existing appointment in Firestore
   updateAppointmentInFireStore(AppointmentModel appointment) async {
     try {
       await appointmentCollection
@@ -159,6 +176,7 @@ class FireStoreHelper {
     }
   }
 
+  // Updates an existing stored (history) appointment in Firestore
   updateStoredAppointmentInFireStore(AppointmentModel appointment) async {
     try {
       await storedAppointmentCollection

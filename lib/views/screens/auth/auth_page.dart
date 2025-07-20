@@ -142,8 +142,8 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                       ],
                     ),
-                  Config.spaceSmall,
 
+                  // Config.spaceSmall,
                   Center(
                     child: TextButton(
                       child: Text(

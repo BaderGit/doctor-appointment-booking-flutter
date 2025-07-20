@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'dart:developer';
 
 // import 'package:final_project/utils/app_router.dart';
@@ -9,9 +11,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthHelper {
   AuthHelper._();
+
   static AuthHelper authHelper = AuthHelper._();
+
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
+  // Sign in method with email and password
   Future<UserCredential?> signIn(
     String emailAddress,
     String password,
@@ -40,22 +45,26 @@ class AuthHelper {
     return null;
   }
 
+  // Get current user's ID
   String? getUserId() {
     return firebaseAuth.currentUser?.uid;
   }
 
+  // Check if there's a user signed in
   Future<User?> checkUser() async {
     User? user = firebaseAuth.currentUser;
     return user;
   }
 
-  // ignore: body_might_complete_normally_nullable
+  // Sign up method with email and password
+
   Future<UserCredential?> signUp(
     String emailAddress,
     String password,
     AppLocalizations localization,
   ) async {
     try {
+      // Attempt to create a new user with email and password
       final credential = await firebaseAuth.createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
@@ -63,6 +72,7 @@ class AuthHelper {
       return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
+        // Show dialog if password is too weak
         CustomShowDialog.showDialogFunction(
           localization.weakPassword,
           localization,
@@ -78,13 +88,16 @@ class AuthHelper {
     }
   }
 
+  // Sign out the current user
   signOut() async {
     await firebaseAuth.signOut();
   }
 
+  // Send password reset email
   forgetPassword(String email, AppLocalizations localization) async {
     try {
       await firebaseAuth.sendPasswordResetEmail(email: email);
+
       CustomShowDialog.showDialogFunction(
         localization.resetPasswordRequest,
         localization,

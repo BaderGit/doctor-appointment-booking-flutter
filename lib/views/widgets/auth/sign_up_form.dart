@@ -35,7 +35,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       radius: 64,
                       backgroundImage: auth.selectedPatientImage != null
                           ? FileImage(auth.selectedPatientImage!)
-                          : const AssetImage("assets/profile33.jpg")
+                          : const AssetImage("assets/anonymous_profile.jpg")
                                 as ImageProvider,
                     ),
                   ),

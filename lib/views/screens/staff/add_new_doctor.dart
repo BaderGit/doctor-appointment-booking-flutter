@@ -109,7 +109,9 @@ class AddNewDoctorScreenState extends State<AddNewDoctorScreen> {
                                   backgroundImage:
                                       auth.selectedDoctorImage != null
                                       ? FileImage(auth.selectedDoctorImage!)
-                                      : const AssetImage("assets/profile33.jpg")
+                                      : const AssetImage(
+                                              "assets/anonymous_profile.jpg",
+                                            )
                                             as ImageProvider,
                                 ),
                               ),
