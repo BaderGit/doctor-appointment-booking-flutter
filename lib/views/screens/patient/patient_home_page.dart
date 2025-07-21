@@ -161,7 +161,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                   )
                                 : fireStore.filteredDoctors.isEmpty
                                 ? [
-                                    // Text(localizations.noDoctorsAvailable)
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                         vertical: 40,
