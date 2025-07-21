@@ -160,7 +160,40 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                     ),
                                   )
                                 : fireStore.filteredDoctors.isEmpty
-                                ? [Text(localizations.noDoctorsAvailable)]
+                                ? [
+                                    // Text(localizations.noDoctorsAvailable)
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 40,
+                                      ),
+                                      child: Center(
+                                        child: Column(
+                                          children: [
+                                            Icon(
+                                              FontAwesomeIcons.userDoctor,
+                                              size: 60,
+                                              color: Color.fromRGBO(
+                                                158,
+                                                158,
+                                                158,
+                                                0.5,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 20),
+                                            Text(
+                                              localizations.noDoctorsAvailable,
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.grey.shade600,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ]
                                 : List.generate(
                                     fireStore.filteredDoctors.length,
                                     (index) => DoctorCard(
